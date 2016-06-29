@@ -1,0 +1,38 @@
+{
+  "name": "MTKPrivacyPods",
+  "version": "0.1.0",
+  "summary": "PrivacyPods For XiaoMai",
+  "homepage": "http://192.168.1.58/Joy/iOS-CocoaPods-Privacy",
+  "requires_arc": true,
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Joy": "joy@caizhu.com"
+  },
+  "source": {
+    "git": "git@192.168.1.58:Joy/iOS-CocoaPods-Privacy.git",
+    "tag": "0.1.0"
+  },
+  "public_header_files": "MTKPrivacyPods/MTKPrivacyPods.h",
+  "source_files": "MTKPrivacyPods/MTKPrivacyPods.h",
+  "subspecs": [
+    {
+      "name": "MTKModel",
+      "source_files": "MTKPrivacyPods/MTKModel/*.{h,m}",
+      "public_header_files": "MTKPrivacyPods/MTKModel/*.h",
+      "libraries": "sqlite3"
+    },
+    {
+      "name": "MTKExtension",
+      "source_files": "MTKPrivacyPods/MTKExtension/*.{h,m}",
+      "public_header_files": "MTKPrivacyPods/MTKExtension/*.h"
+    },
+    {
+      "name": "MTKView",
+      "source_files": "MTKPrivacyPods/MTKView/*.{h,m}",
+      "public_header_files": "MTKPrivacyPods/MTKView/*.h"
+    }
+  ]
+}

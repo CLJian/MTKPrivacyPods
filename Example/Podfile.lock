@@ -1,0 +1,25 @@
+PODS:
+  - MTKPrivacyPods (0.1.0):
+    - MTKPrivacyPods/MTKExtension (= 0.1.0)
+    - MTKPrivacyPods/MTKModel (= 0.1.0)
+    - MTKPrivacyPods/MTKView (= 0.1.0)
+  - MTKPrivacyPods/MTKExtension (0.1.0)
+  - MTKPrivacyPods/MTKModel (0.1.0)
+  - MTKPrivacyPods/MTKView (0.1.0)
+
+DEPENDENCIES:
+  - MTKPrivacyPods (from `git@192.168.1.58:Joy/iOS-CocoaPods-Privacy.git`)
+
+EXTERNAL SOURCES:
+  MTKPrivacyPods:
+    :git: git@192.168.1.58:Joy/iOS-CocoaPods-Privacy.git
+
+CHECKOUT OPTIONS:
+  MTKPrivacyPods:
+    :commit: 109fd72cbab91a610325691b1020d438df239ddc
+    :git: git@192.168.1.58:Joy/iOS-CocoaPods-Privacy.git
+
+SPEC CHECKSUMS:
+  MTKPrivacyPods: f3608f08b3af51919eee28fc256f318c45d4080e
+
+COCOAPODS: 0.39.0
