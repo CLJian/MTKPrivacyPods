@@ -24,4 +24,7 @@
 
 - (NSString *)jsonString;
 
+//键的map @{Json字段名称:属性名称} 都使用小写
++(NSDictionary *)mtkJsonModelKeyMapper;
+
 @end

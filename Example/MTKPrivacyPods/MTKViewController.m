@@ -26,12 +26,16 @@
     MTKTestModel *model = [MTKTestModel new];
     model.tttttt = @"dsdasda";
     
+    //    NSDictionary *dic = @{@"tttttt":@"ddddd" , @"rrrrr":@"vvvv"};
+    //
+    //    [model injectJSONData:dic];
+    //
+    //    NSLog(@"%@",model);
+
+    
     [[MTKDBHandle sharedDBHandle]saveRowWithObject:model withTableKey:@"2222" andCompletion:^(BOOL success) {
         
     }];
-    
-    
-
     
     
 	// Do any additional setup after loading the view, typically from a nib.

@@ -9,6 +9,28 @@
 #import "MTKJsonModel.h"
 #import "NSObject+MTKProperties.h" 
 
+@interface NSDictionary (MTKJsonModel)
+-(id)mtkKeyForValue:(id)value;
+@end
+
+@implementation NSDictionary (MTKJsonModel)
+
+-(id)mtkKeyForValue:(id)value
+{
+    NSArray *keys = [self allKeys];
+    for(id key in keys)
+    {
+        NSString *keyValue = self[key];
+        if([keyValue isEqual:value])
+        {
+            return key;
+        }
+    }
+    return nil;
+}
+
+@end
+
 @interface NSArray (MTKJsonModel)
 - (instancetype)arrayWithModelClass:(Class)modelClass;
 @end
@@ -137,6 +159,13 @@
     NSDictionary *propertyMap = [[self class]mtkCachedProperties];
     NSString *usedKey = [key lowercaseString];
     MTKModelPropertyType *propertyType = propertyMap[usedKey];
+    if (!propertyType) {
+        NSDictionary *keyMap = [self class].mtkJsonModelKeyMapper;
+        NSString *modelKey = keyMap[usedKey];
+        if (modelKey.length) {
+            propertyType = propertyMap[modelKey];
+        }
+    }
     if (propertyType) {
         id usedValue = [propertyType usedValueWithOriginValue:value];
         if (usedValue) {
@@ -159,6 +188,13 @@
     NSDictionary *propertyMap = [[self class]mtkCachedProperties];
     NSString *usedKey = [key lowercaseString];
     MTKModelPropertyType *propertyType = propertyMap[usedKey];
+    if (!propertyType) {
+        NSDictionary *keyMap = [self class].mtkJsonModelKeyMapper;
+        NSString *modelKey = keyMap[usedKey];
+        if (modelKey.length) {
+            propertyType = propertyMap[modelKey];
+        }
+    }
     if (propertyType) {
         id usedValue = [propertyType usedValueWithOriginValue:value];
         if (usedValue) {
@@ -173,6 +209,13 @@
     NSDictionary *propertyMap = [[self class]mtkCachedProperties];
     NSString *usedKey = [key lowercaseString];
     MTKModelPropertyType *propertyType = propertyMap[usedKey];
+    if (!propertyType) {
+        NSDictionary *keyMap = [self class].mtkJsonModelKeyMapper;
+        NSString *modelKey = keyMap[usedKey];
+        if (modelKey.length) {
+            propertyType = propertyMap[modelKey];
+        }
+    }
     id value;
     if (propertyType) {
         if (propertyType.propertyType == MTKClassPropertyTypeObject) {
@@ -188,7 +231,7 @@
         }
     }
     if (value) {
-        [super setValue:value forKey:key];
+        [super setValue:value forKey:propertyType.propertyName];
     }
 }
 
@@ -197,10 +240,16 @@
     NSDictionary *propertyMap = [[self class]mtkCachedProperties];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     NSArray *allProperties = [propertyMap allValues];
+    NSDictionary *keyMapper = [[self class]mtkJsonModelKeyMapper];
     for (MTKModelPropertyType *propertyType in allProperties) {
         id obj = [self valueForKey:propertyType.propertyName];
+        NSString *key = [propertyType.propertyName lowercaseString];
+        NSString *maperKey = [keyMapper mtkKeyForValue:key];
+        if (maperKey.length) {
+            key = maperKey;
+        }
         if ([obj isKindOfClass:[MTKJsonModel class]]) {
-            [dict setObject:[obj jsonDict] forKey:propertyType.propertyName];
+            [dict setObject:[obj jsonDict] forKey:key];
         }else if ([obj isKindOfClass:[NSArray class]] && [propertyType.arrUsedClass isSubclassOfClass:[MTKJsonModel class]]) {
             NSArray *items = (NSArray *)obj;
             NSMutableArray *jsonList = [NSMutableArray array];
@@ -209,10 +258,10 @@
                     [jsonList addObject:[item jsonDict]];
                 }
             }
-            [dict setObject:jsonList forKey:propertyType.propertyName];
+            [dict setObject:jsonList forKey:key];
         }else {
             if (obj) {
-                [dict setValue:obj forKey:propertyType.propertyName];
+                [dict setValue:obj forKey:key];
             }
         }
     }
@@ -233,5 +282,9 @@
     return str;
 }
 
++(NSDictionary *)mtkJsonModelKeyMapper
+{
+    return nil;
+}
 
 @end

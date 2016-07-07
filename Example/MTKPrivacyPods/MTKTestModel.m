@@ -10,4 +10,9 @@
 
 @implementation MTKTestModel
 
++(NSDictionary *)mtkJsonModelKeyMapper
+{
+    return @{@"rrrrr":@"sssss"};
+}
+
 @end

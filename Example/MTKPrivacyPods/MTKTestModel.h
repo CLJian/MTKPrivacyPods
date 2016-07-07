@@ -12,4 +12,6 @@
 
 @property (nonatomic,copy) NSString *tttttt;
 
+@property (nonatomic,copy) NSString *sssss;
+
 @end
